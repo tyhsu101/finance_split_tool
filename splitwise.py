@@ -1,8 +1,8 @@
 import pandas as pd
 
 class split_wise:
-    def __init__(self,mambers:tuple) -> None:
-        self.members = mambers
+    def __init__(self,members:tuple) -> None:
+        self.members = members
         self.detail = pd.DataFrame(columns=['amount','giver','reciver','reciver_portion','detail'])
         self.balance = {}
         self.close = {}
@@ -33,31 +33,8 @@ class split_wise:
         print(self.balance)
     def close_account(self):
         giver_dic = {k:v for k,v in sorted(self.balance.items(),key = lambda item:item[1]) if v < 0}
-        reciver_dic = {k:v for k,v in sorted(self.balance.items(),key = lambda item:item[1],reverse=True) if v > 0}
-        rec_key = list(reciver_dic.keys())
-        ind_n = 0
-        temp_doller = 0
-        for i,x in zip(giver_dic.keys(),giver_dic.values()):
-            ttl_accnt = 0
-            if temp_doller != 0:
-                if temp_doller + x < 0:
-                    print(rec_key[ind_n]," should give ",i,temp_doller,'dollar.')
-                    ttl_accnt += temp_doller
-                    temp_doller = 0
-                    ind_n += 1
-                else:
-                    print(rec_key[ind_n]," should give ",i,x,'dollar.')
-                    temp_doller += x
-                    continue
-            while ttl_accnt + reciver_dic[rec_key[ind_n]] + x < 0:
-                print(rec_key[ind_n]," should give ",i,reciver_dic[rec_key[ind_n]],'dollar.')
-                ttl_accnt += reciver_dic[rec_key[ind_n]]
-                ind_n += 1
-            if ttl_accnt + x < 0:
-                print(rec_key[ind_n]," should give ",i,0 - (ttl_accnt + x),'dollar.')
-                temp_doller = ttl_accnt + reciver_dic[rec_key[ind_n]] + x
-            elif ttl_accnt + x == 0:
-                ind_n += 1
+        reciver_dic = {k:v for k,v in sorted(self.balance.items(),key = lambda item:item[1]) if v > 0}
+        
 
 def main():
     pass
