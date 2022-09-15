@@ -32,6 +32,7 @@ class split_wise:
     def print_curr_balance(self):
         print(self.balance)
     def close_account(self):
+        text = ''
         giver_dic = {k:v for k,v in sorted(self.balance.items(),key = lambda item:item[1]) if v < 0}
         reciver_dic = {k:v for k,v in sorted(self.balance.items(),key = lambda item:item[1],reverse=True) if v > 0}
         rec_key = list(reciver_dic.keys())
@@ -41,23 +42,24 @@ class split_wise:
             ttl_accnt = 0
             if temp_doller != 0:
                 if temp_doller + x < 0:
-                    print(rec_key[ind_n]," should give ",i,temp_doller,'dollar.')
+                    text = text + str(rec_key[ind_n]) + " should give " + str(i) +' '+ str(temp_doller) + 'dollar.\n' 
                     ttl_accnt += temp_doller
                     temp_doller = 0
                     ind_n += 1
                 else:
-                    print(rec_key[ind_n]," should give ",i,x,'dollar.')
+                    text = text + str(rec_key[ind_n]) + " should give " + str(i) + ' '+ str(x) + 'dollar.\n'
                     temp_doller += x
                     continue
             while ttl_accnt + reciver_dic[rec_key[ind_n]] + x < 0:
-                print(rec_key[ind_n]," should give ",i,reciver_dic[rec_key[ind_n]],'dollar.')
+                text = text + str(rec_key[ind_n]) + " should give " + str(i) +' '+ str(reciver_dic[rec_key[ind_n]]) + 'dollar.\n'
                 ttl_accnt += reciver_dic[rec_key[ind_n]]
                 ind_n += 1
             if ttl_accnt + x < 0:
-                print(rec_key[ind_n]," should give ",i,0 - (ttl_accnt + x),'dollar.')
+                text = text + str(rec_key[ind_n]) + " should give " + str(i) + ' ' + str(0 - (ttl_accnt + x)) + 'dollar.\n'
                 temp_doller = ttl_accnt + reciver_dic[rec_key[ind_n]] + x
             elif ttl_accnt + x == 0:
                 ind_n += 1
+        return text
 
 def main():
     pass
